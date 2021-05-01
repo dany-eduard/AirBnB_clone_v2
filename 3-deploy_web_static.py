@@ -13,7 +13,8 @@ from fabric.api import env
 import re
 
 
-env.hosts = ['35.196.52.46', '18.232.176.193']
+env.hosts = ['{}@35.237.172.23'.format(env.user), '{}@34.75.60.230'.format(
+    env.user)]
 
 
 def do_pack():
