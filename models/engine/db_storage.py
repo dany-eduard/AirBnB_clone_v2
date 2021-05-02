@@ -15,12 +15,14 @@ from models.review import Review
 from sqlalchemy.orm import sessionmaker, scoped_session, exc
 import os
 
-clases={"State": State, "City": City, "User": User,
-        "Place": Place, "Review": Review, "Amenity": Amenity}
+clases = {"State": State, "City": City, "User": User,
+          "Place": Place, "Review": Review, "Amenity": Amenity}
+
 
 class DBStorage():
     __engine = None
     __session = None
+
     def __init__(self):
         """init method of DBStorage"""
         user = os.getenv('HBNB_MYSQL_USER')
@@ -31,7 +33,7 @@ class DBStorage():
             user, password, localhost, db_name), pool_pre_ping=True)
         if os.getenv('HBNB_ENV') == 'test':
             Base.metada.drop_all(self.__engine)
-        
+
     def all(self, cls=None):
         """
         all of DBStorage
@@ -55,20 +57,20 @@ class DBStorage():
                     val = obj
                     dbstore[key] = val
         return dbstore
-    
+
     def new(self, obj):
         """
         add new object to database session
         """
         if obj:
             self.__session.add(obj)
-    
+
     def save(self):
         """
         commit the changes of the current database session
         """
         self.__session.commit()
-        
+
     def delete(self, obj=None):
         """
         delete from the current database session
@@ -82,7 +84,7 @@ class DBStorage():
         """
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
-                                  expire_on_commit=False)
+                                       expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
 
