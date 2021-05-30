@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 """Unittest module for console"""
-import unittest
+from console import HBNBCommand
+from io import StringIO
+from unittest.mock import patch
 import cmd
+import json
+import models
 import os
 import pep8
-import models
-from unittest.mock import patch
-from io import StringIO
-from console import HBNBCommand
-import json
+import unittest
 
 run = os.system
 
@@ -33,6 +33,13 @@ class TestHBNBCommand(unittest.TestCase):
         pep8style = pep8.StyleGUide(quite=True)
         result = pep8style.check_files(["console.py"])
         self.assertEqual(result.total_errors, 0)
+
+    def test_pep8_test_base_model(self):
+        """Test that tests/test_models/test_base_model.py conforms to PEP8."""
+        pep8style = pep8.StyleGuide(quiet=True)
+        res = pep8style.check_files(["tests/test_console.py"])
+        self.assertEqual(res.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
     def test_first_create(self):
         """First create test"""
